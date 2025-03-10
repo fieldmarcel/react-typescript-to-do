@@ -2,8 +2,12 @@ import "./styles.css";
 import { useState } from "react";
 export default function App() {
   const [todo, setTodo] = useState("");
+  const [list, setList] = useState<string[]>([]);
+  const [checked, setchecked] = useState<string[]>([]);
+
   const handlesubmit = () => {
-    setTodo(todo);
+    setList([...list, todo]);
+    setTodo("");
   };
 
   return (
@@ -12,14 +16,22 @@ export default function App() {
 
       <div className="flex flex-row">
         <input
+          value={todo}
           placeholder="write here"
           onChange={(e) => {
             setTodo(e.target.value);
           }}
         ></input>
         <button onClick={handlesubmit}>submit</button>
-        <div>{todo}</div>
       </div>
+      {list.map((task, index) => {
+        return (
+          <div className="flex flex-row">
+            <div key={index}> {task}</div>
+            <input type="checkbox"></input>
+          </div>
+        );
+      })}
     </div>
   );
 }
